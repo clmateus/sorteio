@@ -4,7 +4,7 @@ module.exports = function (grunt) {
         less: {
             development: {
                 files: {
-                    'main.css' : 'main.less'
+                    'dev/styles/main.css' : 'src/styles/main.less'
                 }
             },
             production: {
@@ -12,30 +12,17 @@ module.exports = function (grunt) {
                     compress: true,
                 },
                 files: {
-                    'main.min.css' : 'main.less'
+                    'dist/styles/main.min.css' : 'src/styles/main.less'
                 }
             }
         },
-        sass: {
-            dist: {
-                options: {
-                    style: 'compressed'
-                },
-                files: {
-                    'main2.css': 'main.scss'
-                }
-            }
-        },
-        concurrent: {
-            target: ['olaGrunt', 'less', 'sass'],
-        }
     });
 
     // Load grunt tasks
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-concurrent');
 
     // Register tasks
-    grunt.registerTask('default', ['concurrent']);
+    grunt.registerTask('default', ['less:development']);
+    grunt.registerTask('build', ['less:production']);
 }
